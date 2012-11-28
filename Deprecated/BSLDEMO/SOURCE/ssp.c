@@ -241,8 +241,8 @@ int comInit(LPCSTR lpszDevice, DWORD aTimeout, int aProlongFactor)
   /* Char. w/ Parity-Err are replaced with 0xff 
    *(if fErrorChar is set to TRUE) 
    */
-  comDCB.fRtsControl = RTS_CONTROL_ENABLE; /* For power supply */
-  comDCB.fDtrControl = DTR_CONTROL_ENABLE; /* For power supply */
+  comDCB.fRtsControl = RTS_CONTROL_DISABLE; /* For power supply */
+  comDCB.fDtrControl = DTR_CONTROL_DISABLE; /* For power supply */
                        
   comDCB.fOutxCtsFlow= FALSE;        comDCB.fOutxDsrFlow= FALSE;        
   comDCB.fOutX       = FALSE;        comDCB.fInX        = FALSE;
@@ -304,6 +304,11 @@ int comDone()
     ClearCommError(hComPort, &errors, &comState);
   } while ((comState.cbOutQue > 0) && 
            (calcTimeout(startTime) < timeout));
+
+  comDCB.fRtsControl = RTS_CONTROL_DISABLE;
+  comDCB.fDtrControl = DTR_CONTROL_DISABLE;
+
+  SetCommState(hComPort, &comDCB);
 
   /* Clear buffers: */
   PurgeComm(hComPort, PURGE_TXCLEAR | PURGE_TXABORT);

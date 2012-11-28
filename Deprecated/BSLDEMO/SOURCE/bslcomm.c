@@ -66,10 +66,10 @@ void SetRSTpin(BOOL level)
 /* Controls RST/NMI pin (0: GND; 1: VCC) */
 {
   //if (level == TRUE)
-  //  comDCB.fDtrControl = DTR_CONTROL_ENABLE;
+  //  comDCB.fRtsControl = RTS_CONTROL_ENABLE;
   //else
-  //  comDCB.fDtrControl = DTR_CONTROL_DISABLE;
-  comDCB.fDtrControl = level ? DTR_CONTROL_ENABLE : DTR_CONTROL_DISABLE;
+  //  comDCB.fRtsControl = RTS_CONTROL_DISABLE;
+  comDCB.fRtsControl = level ? RTS_CONTROL_DISABLE : RTS_CONTROL_ENABLE;
 
   SetCommState(hComPort, &comDCB);
 } /* SetRSTpin */
@@ -78,10 +78,10 @@ void SetTESTpin(BOOL level)
 /* Controls TEST pin (0: VCC; 1: GND) */
 {
   //if (level == TRUE)
-  //  comDCB.fRtsControl = RTS_CONTROL_ENABLE;
+  //  comDCB.fDtrControl = DTR_CONTROL_ENABLE;
   //else
-  //  comDCB.fRtsControl = RTS_CONTROL_DISABLE;
-  comDCB.fRtsControl = level ? RTS_CONTROL_ENABLE : RTS_CONTROL_DISABLE;
+  //  comDCB.fDtrControl = DTR_CONTROL_DISABLE;
+  comDCB.fDtrControl = level ? DTR_CONTROL_DISABLE : DTR_CONTROL_ENABLE;
 
   SetCommState(hComPort, &comDCB);
 } /* SetTESTpin */
